@@ -82,7 +82,7 @@ function unstake() public {
     }
 /*
      * @dev Allow check account balance.
-     * it will user address then tell tokens works like balanceof use any
+     * it will user address then tell tokens works like balanceof use any function
      */
     function checkBalance(address _user) public view returns (uint256) {
         return balanceOf(_user);
