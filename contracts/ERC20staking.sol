@@ -18,7 +18,7 @@ contract StakingContract is ERC20, Ownable {
         require(numTokens > 0, "Invalid input");
         uint256 totalPrice = numTokens * price;
         require(msg.value >= totalPrice, "Insufficient payment");
-        _mint(msg.sender, numTokens*(10**(decimals())));
+        _mint(msg.sender, numTokens);
         if (msg.value > totalPrice) {
             uint256 refundAmount = msg.value - totalPrice;
             (bool success, ) = msg.sender.call{value: refundAmount}("");
