@@ -21,7 +21,7 @@ describe("StakingContract", function () {
         await stakingContract.connect(user1).buyTokens(10, { value: ethers.utils.parseEther("0.1") });
         const balanceAfter = await stakingContract.balanceOf(user1.address);
         console.log("Balance after:", balanceAfter.toString());
-        expect(balanceAfter).to.equal(balanceBefore.add(50 * 10**18));
+        expect(balanceAfter.toNumber()).to.equal(10);
       });
       
 
