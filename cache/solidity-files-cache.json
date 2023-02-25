@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "C:\\Users\\muhammad waqar\\Desktop\\Staking Contract\\contracts\\ERC20staking.sol": {
-      "lastModificationDate": 1677321088240,
-      "contentHash": "b2316b1f2b85706efb3cbdf00ce0eb92",
+      "lastModificationDate": 1677322451190,
+      "contentHash": "5f2f721225845e8876f14bdc685cf85e",
       "sourceName": "contracts/ERC20staking.sol",
       "solcConfig": {
         "version": "0.8.17",

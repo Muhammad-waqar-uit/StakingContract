@@ -29,6 +29,17 @@ describe("StakingContract", function () {
       await expect(stakingContract.connect(user1).buyTokens(0, { value: ethers.utils.parseEther("0.1") }))
     });
     it("should revert if payment is insufficient", async function () {
-      await expect(stakingContract.connect(user1).buyTokens(10, { value: ethers.utils.parseEther("0.09") })
-    )
-  });});});
+      await expect(stakingContract.connect(user1).buyTokens(10, { value: ethers.utils.parseEther("0.09") }))});
+      it("should stake tokens", async function () {
+        await stakingContract.connect(user1).buyTokens(100, { value: ethers.utils.parseEther("0.1") });
+        await stakingContract.connect(user1).stake(100); // 5 * 10**18
+        const amountStaked = await stakingContract.amountStaked(user1.address);
+        const balance = await stakingContract.balanceOf(stakingContract.address);
+        expect(amountStaked.toNumber()).to.equal(100);
+        expect(balance.toNumber()).to.equal(100);
+      });
+  
+      it("should revert if amount is 0", async function () {
+        await expect(stakingContract.connect(user1).stake(0));
+      });
+  });});
