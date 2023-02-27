@@ -18,6 +18,7 @@ contract StakingContract is ERC20, Ownable {
      * @dev Constructor to initialize the contract of Staking.
      * @param name_ The name of the contract token.
      * @param symbol_ the symbol of the contract token
+     * * @param duration the duration in seconds for which the reward will be calculated.
      */
     constructor(string memory name, string memory symbol, uint256 _duration) ERC20(name, symbol) {
         duration = _duration;

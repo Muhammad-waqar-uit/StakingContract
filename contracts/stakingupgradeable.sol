@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-
-contract StakingContract is ERC20, Ownable {
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+contract StakingContractupgrade is ERC20Upgradeable, OwnableUpgradeable {
     //staked amount mapping with address
     mapping(address => uint256) public amountStaked;
     //checking if amount is staked or not
@@ -13,15 +13,16 @@ contract StakingContract is ERC20, Ownable {
     //duration of time in seconds it is stored
     uint256 public duration;
     //price of one token is 1 wei
-    uint256 public price = 1 wei;
+    uint256 constant public price = 1 wei;
 /*
-     * @dev Constructor to initialize the contract of Staking.
+     * @dev initilize to initialize the contract of Staking.
      * @param name_ The name of the contract token.
-     * @param symbol_ the symbol of the contract token
-     * * @param duration the duration in seconds for which the reward will be calculated.
+     * @param symbol_ the symbol of the contract token.
+     * @param duration the duration in seconds for which the reward will be calculated.
      */
-    constructor(string memory name, string memory symbol, uint256 _duration) ERC20(name, symbol) {
-        duration = _duration;
+      function initialize(string memory name_, string memory symbol_,uint256 duration_) public virtual  initializer{
+        __ERC20_init(name_,symbol_);
+        duration=duration_;
     }
 /*
      * @dev Allows a user to Buy Token.
@@ -58,16 +59,7 @@ contract StakingContract is ERC20, Ownable {
      * @dev Allow user to unstake amount.
      * it will unstake all the tokens with reward if any to the staker account address
      */
-// function unstakeAll() public returns(uint256){
-//     require(amountStaked[msg.sender] > 0, "No tokens staked");
-//     uint256 reward = calculateReward(msg.sender);
-//     uint256 totalAmount = amountStaked[msg.sender] + reward;
-//     amountStaked[msg.sender] = 0;  
-//     staked[msg.sender] = false;
-//     _mint(address(this), reward); // add reward amount to contract balance
-//     _transfer(address(this), msg.sender, totalAmount);
-//     return totalAmount;
-// }
+
 function unstake() public returns (uint256) {
     require(amountStaked[msg.sender] > 0, "No tokens staked");
     uint256 reward = calculateReward(msg.sender);
@@ -110,23 +102,6 @@ function unstake() public returns (uint256) {
     (bool success, ) = payable(owner()).call{value: balance}("");
     require(success, "Failed to transfer Ether to owner");
 }
-    // function unstake(uint256 amount)public returns(bool){
-    //     require(staked[msg.sender],"No tokens staked");
-    //     uint reward=calculateReward(msg.sender);
-    //     uint amounts=amount;
-    //     if(amounts==amountStaked[msg.sender]+staker_reward[msg.sender]){
-    //         amountStaked[msg.sender] = 0;
-    //         staked[msg.sender] = false;
-    //         _mint(address(this), reward); // add reward amount to contract balance
-    //         _transfer(address(this), msg.sender, amounts);
-    //     }else{
-    //         amountStaked[msg.sender]+=staker_reward[msg.sender];
-    //         amountStaked[msg.sender]-=amounts;
-    //         _mint(address(this), reward);
-    //         _transfer(address(this), msg.sender, amounts);
-    //     }
-    //     return true;
-    // }
 /*
      * @dev Allow owner to unstake custome coins from contract.
      * @param withdraw the amount you want to unstakefrom contract.
