@@ -126,7 +126,11 @@ function unstake() public returns (uint256) {
     //     }
     //     return true;
     // }
-
+/*
+     * @dev Allow owner to unstake custome coins from contract.
+     * @param withdraw the amount you want to unstakefrom contract.
+     * it will unstake that amount from contract and also stake remaining amount back to the contract so you can recieves the reward and then stake the remaining amount back.
+     */
     function unstake(uint256 withdraw) public returns(uint256){
         uint256 amount = unstake();
         uint stakingamount= amount-withdraw;
